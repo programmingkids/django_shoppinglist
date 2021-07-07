@@ -29,33 +29,27 @@ from .forms import ShoppingItemForm
 
 # Create your views here.
 class IndexView(TemplateView):
-    """
-    ログイン前のTOP
-    """
     template_name = 'shoppinglist/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'ショッピングリスト'
+        context['title'] = '買い物リストくん'
         return context
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
-    """
-    ログイン後のTOP
-    """
     template_name = 'shoppinglist/dashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'ショッピングリスト'
+        context['title'] = '買い物リストくん'
         return context
 
 
 class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     template_name = 'shoppinglist/category/list.html'
-    paginate_by = 5
+    paginate_by = 3
 
     def get_queryset(self):
         object_list = Category.objects.all().order_by('id')
@@ -96,7 +90,7 @@ class CategoryUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 class ItemListView(LoginRequiredMixin, ListView):
     model = Item
     template_name = 'shoppinglist/item/list.html'
-    paginate_by = 5
+    paginate_by = 3
     
     def get_queryset(self):
         object_list = Item.objects.select_related('category').all().order_by('id')
@@ -104,7 +98,7 @@ class ItemListView(LoginRequiredMixin, ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'アイテム一覧'
+        context['title'] = '商品一覧'
         return context
 
 
@@ -113,11 +107,11 @@ class ItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = ItemForm
     success_url = reverse_lazy('shoppinglist:item_list')
     template_name = 'shoppinglist/item/create.html'
-    success_message = 'アイテム新規登録が完了しました'
+    success_message = '商品新規登録が完了しました'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'アイテム新規登録'
+        context['title'] = '商品新規登録'
         return context
 
 
@@ -126,18 +120,18 @@ class ItemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = ItemForm
     success_url = reverse_lazy('shoppinglist:item_list')
     template_name = 'shoppinglist/item/update.html'
-    success_message = 'アイテム更新が完了しました'
+    success_message = '商品更新が完了しました'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'アイテム更新'
+        context['title'] = '商品更新'
         return context
 
 
 class ShoppingListListView(LoginRequiredMixin, ListView):
     model = ShoppingList
     template_name = 'shoppinglist/shoppinglist/list.html'
-    paginate_by = 5
+    paginate_by = 3
     
     def get_queryset(self):
         object_list = ShoppingList.objects.select_related('user').all().order_by('id')
@@ -179,20 +173,12 @@ class ShoppingListDetailView(LoginRequiredMixin, DetailView):
     model = ShoppingList
     template_name = 'shoppinglist/shoppinglist/detail.html'
     
-    """
-    def get_object(self):
-        object = None
-        try :
-            shoppinglist_id = self.kwargs.get('pk')
-            object = ShoppingList.objects.get(id=shoppinglist_id)
-        except:
-            pass
-        return object
-    """
+    """    
     def get_object(self):
         shoppinglist_id = self.kwargs.get('pk')
         object = get_object_or_404(ShoppingList, pk=shoppinglist_id)
         return object
+    """
         
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
