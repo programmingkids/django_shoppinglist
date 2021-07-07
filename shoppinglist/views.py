@@ -16,6 +16,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth import get_user_model
 
+from django.db.models import Prefetch
+
 from .models import Category
 from .models import Item
 from .models import ShoppingList
@@ -173,12 +175,19 @@ class ShoppingListDetailView(LoginRequiredMixin, DetailView):
     model = ShoppingList
     template_name = 'shoppinglist/shoppinglist/detail.html'
     
-    """    
     def get_object(self):
         shoppinglist_id = self.kwargs.get('pk')
-        object = get_object_or_404(ShoppingList, pk=shoppinglist_id)
+        object = ShoppingList.objects \
+            .filter(id=shoppinglist_id) \
+            .select_related('user') \
+            .prefetch_related(
+                Prefetch(
+                    'shoppingitem_set',
+                    queryset=ShoppingItem.objects.select_related('item', 'item__category'), 
+                    to_attr='shoppingitems'
+            )) \
+            .first()
         return object
-    """
         
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -195,19 +204,23 @@ class ShoppingItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'ショッピング商品新規登録'
+        
+        # ショッピングリストのモデル取得
         shoppinglist_id = self.kwargs.get('shoppinglist_id')
         shoppinglist = ShoppingList.objects.get(id=shoppinglist_id)
         context['shoppinglist'] = shoppinglist
         return context
 
     def get_form(self):
-        # ショッピングリストの初期値設定
+        # ショッピングリストのセレクトボックスの初期値設定
         form = super().get_form()
         shoppinglist_id = self.kwargs.get('shoppinglist_id')
         form.fields['shoppinglist'].initial = shoppinglist_id
         return form
     
     def get_success_url(self):
+        # 新規登録処理完了後のリダイレクト先の指定
+        # ショッピングリストの詳細画面へリダイレクト
         shoppinglist_id = self.object.shoppinglist.id
         return reverse('shoppinglist:shoppinglist_detail', kwargs={'pk': shoppinglist_id})
 
@@ -224,6 +237,8 @@ class ShoppingItemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView
         return context
     
     def get_success_url(self):
+        # 更新処理完了後のリダイレクト先の指定
+        # ショッピングリストの詳細画面へリダイレクト
         shoppinglist_id = self.object.shoppinglist.id
         return reverse('shoppinglist:shoppinglist_detail', kwargs={'pk': shoppinglist_id})
 
