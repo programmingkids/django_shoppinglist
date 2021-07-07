@@ -1,34 +1,13 @@
 from django.shortcuts import render
-from django.shortcuts import redirect
 from django.shortcuts import resolve_url
 
-from django.http import HttpResponse
-from django.http import HttpRequest
-from django.http import Http404
-from django.http import HttpResponseBadRequest
-
-from django.urls import reverse_lazy
-from django.urls import reverse
-
-from django.views.generic import TemplateView
-from django.views.generic import ListView
-from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import UpdateView
-from django.views.generic import DeleteView
-
-from django.conf import settings
-
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
-
-from django.contrib.sites.shortcuts import get_current_site
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth import get_user_model
-from django.template.loader import render_to_string
-from django.core.mail import BadHeaderError, send_mail
+from django.contrib.messages.views import SuccessMessageMixin
 
 from .forms import UserUpdateForm
 

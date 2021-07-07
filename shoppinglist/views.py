@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.shortcuts import resolve_url
-from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.urls import reverse
 
@@ -11,9 +10,7 @@ from django.views.generic import UpdateView
 from django.views.generic import DetailView
 
 from django.contrib.messages.views import SuccessMessageMixin
-
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth import get_user_model
 
 from django.db.models import Prefetch
@@ -32,7 +29,7 @@ from .forms import ShoppingItemForm
 # Create your views here.
 class IndexView(TemplateView):
     template_name = 'shoppinglist/index.html'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = '買い物リストくん'
@@ -41,7 +38,7 @@ class IndexView(TemplateView):
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'shoppinglist/dashboard.html'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = '買い物リストくん'
@@ -52,7 +49,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     template_name = 'shoppinglist/category/list.html'
     paginate_by = 3
-
+    
     def get_queryset(self):
         object_list = Category.objects.all().order_by('id')
         return object_list
@@ -69,7 +66,7 @@ class CategoryCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('shoppinglist:category_list')
     template_name = 'shoppinglist/category/create.html'
     success_message = 'カテゴリ新規登録が完了しました'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'カテゴリ新規登録'
@@ -82,7 +79,7 @@ class CategoryUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('shoppinglist:category_list')
     template_name = 'shoppinglist/category/update.html'
     success_message = 'カテゴリ更新が完了しました'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'カテゴリ更新'
@@ -110,7 +107,7 @@ class ItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('shoppinglist:item_list')
     template_name = 'shoppinglist/item/create.html'
     success_message = '商品新規登録が完了しました'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = '商品新規登録'
@@ -123,7 +120,7 @@ class ItemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('shoppinglist:item_list')
     template_name = 'shoppinglist/item/update.html'
     success_message = '商品更新が完了しました'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = '商品更新'
@@ -151,7 +148,7 @@ class ShoppingListCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView
     success_url = reverse_lazy('shoppinglist:shoppinglist_list')
     template_name = 'shoppinglist/shoppinglist/create.html'
     success_message = 'ショッピングリスト新規登録が完了しました'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'ショッピングリスト新規登録'
@@ -183,12 +180,12 @@ class ShoppingListDetailView(LoginRequiredMixin, DetailView):
             .prefetch_related(
                 Prefetch(
                     'shoppingitem_set',
-                    queryset=ShoppingItem.objects.select_related('item', 'item__category'), 
+                    queryset=ShoppingItem.objects.select_related('item', 'item__category'),
                     to_attr='shoppingitems'
             )) \
             .first()
         return object
-        
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'ショッピングリスト詳細'

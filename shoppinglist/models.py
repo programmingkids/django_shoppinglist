@@ -104,6 +104,7 @@ class ShoppingItem(models.Model):
     )
     
     def sub_total(self):
+        # 小計 = 商品の金額 x 個数
         return self.item.price * self.quantity
     
     def __str__(self):
