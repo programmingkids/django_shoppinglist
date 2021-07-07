@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title%}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 p-2 bg-primary text-white">{{ title }}</h2>
+    
+    <div class="list-group">
+        <a href="{% url 'account_login' %}" 
+            class="list-group-item list-group-item-action">ログイン</a>
+        <a href="{% url 'account_signup' %}" 
+            class="list-group-item list-group-item-action">新規ユーザ登録</a>
+    </div>
+</div>
+{% endblock %}

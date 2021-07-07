@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+
+{% block title%}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 p-2 bg-primary text-white">{{ title }}</h2>
+    
+    <div class="mb-3">
+        <a href="{% url 'shoppinglist:shoppinglist_list' %}" class="btn btn-primary">一覧に戻る</a>
+    </div>
+    
+    <table class="table table-bordered table-hover mb-4">
+        <tr>
+            <th>ID</th>
+            <td>{{object.id}}</td>
+        </tr>
+        <tr>
+            <th>名前</th>
+            <td>{{object.name}}</td>
+        </tr>
+        <tr>
+            <th>担当者</th>
+            <td>{{object.user.username}}</td>
+        </tr>
+    </table>
+    
+    <hr>
+    
+    <h5 class="mb-4 p-2 bg-success text-white">ショッピング商品一覧</h5>
+    
+    <div class="mb-3">
+        <a href="{% url 'shoppinglist:shoppingitem_create' object.id %}" 
+           class="btn btn-success text-white">新規作成</a>
+    </div>    
+    
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>ID</th>
+                <th>商品名</th>
+                <th>商品カテゴリ</th>
+                <th>商品金額</th>
+                <th>個数</th>
+                <th>小計</th>
+                <th>更新</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shoppingitem in object.shoppingitem_set.all %}
+            <tr>
+                <td>{{shoppingitem.id}}</td>
+                <td>{{shoppingitem.item.name}}</td>
+                <td>{{shoppingitem.item.category.name}}</td>
+                <td>{{shoppingitem.item.price}}</td>
+                <td>{{shoppingitem.quantity}}</td>
+                <td>{{shoppingitem.sub_total}}</td>
+                <td><a href="{% url 'shoppinglist:shoppingitem_update' shoppingitem.id %}">更新</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

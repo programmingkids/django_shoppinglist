@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+
+{% block title %}ログイン{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-6 offset-md-3">
+        <h1 class="h1 m-3 font-weight-normal text-center">ログイン</h1>
+        <form action="{% url 'account_login' %}" method="post" novalidate>
+            {% bootstrap_form_errors form layout='inline' %}
+            {% bootstrap_form form layout='inline' %}
+            {% csrf_token %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button type="submit" class="btn btn-primary btn-lg btn-block" >ログイン</button>
+        </form>
+        <div class="m-3 text-center">OR</div>
+        <div class="text-center">
+            <a href="{% url 'account_signup' %}" class="btn btn-success">新規ユーザ登録</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

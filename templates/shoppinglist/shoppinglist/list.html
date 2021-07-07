@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+
+{% block title%}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 p-2 bg-primary text-white">{{ title }}</h2>
+    
+    <div class="mb-3">
+        <a href="{% url 'shoppinglist:shoppinglist_create' %}" class="btn btn-primary">新規作成</a>
+    </div>
+    
+    {% bootstrap_pagination page_obj %}
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>ID</th>
+                <th>名前</th>
+                <th>担当</th>
+                <th>新規登録日時</th>
+                <th>更新日時</th>
+                <th>更新</th>
+                <th>詳細</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for o in object_list %}
+            <tr>
+                <td>{{o.id}}</td>
+                <td>{{o.name}}</td>
+                <td>{{o.user.username}}</td>
+                <td>{{o.created_at|date:'Y年m月j日H時i分s秒'}}</td>
+                <td>{{o.modified_at|date:'Y年m月j日H時i分s秒'}}</td>
+                <td><a href="{% url 'shoppinglist:shoppinglist_update' o.id %}">更新</a></td>
+                <td><a href="{% url 'shoppinglist:shoppinglist_detail' o.id %}">詳細</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% bootstrap_pagination page_obj %}
+</div>
+{% endblock %}

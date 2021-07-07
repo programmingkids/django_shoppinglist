@@ -1,0 +1,32 @@
+{% load account %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'shoppinglist:dashboard' %}">ショッピングリスト</a>
+    <button 
+      class="navbar-toggler" 
+      type="button" 
+      data-toggle="collapse" 
+      data-target="#navbarNav" 
+      aria-controls="navbarNav" 
+      aria-expanded="false" 
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% user_display user %}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'user:user_detail' user.pk %}">ユーザ情報</a>
+            <a class="dropdown-item" href="{% url 'user:user_update' user.pk %}">ユーザ情報変更</a>
+            <a class="dropdown-item" href="{% url 'account_change_password'%}">パスワード変更</a>
+            <a class="dropdown-item" href="{% url 'account_logout'%}">ログアウト</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
