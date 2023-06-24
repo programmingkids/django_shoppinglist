@@ -10,6 +10,10 @@
         <h1 class="h1 m-3 font-weight-normal text-center">{{title}}</h1>
         <table class="table">
             <tr>
+                <th>ユーザ名</th>
+                <td>{{ user.username|default:"(no data)" }}</td>
+            </tr>
+            <tr>
                 <th>メールアドレス</th>
                 <td>{{ user.email|default:"(no data)" }}</td>
             </tr>
@@ -22,7 +26,6 @@
                 <td>{{ user.first_name|default:"(no data)" }}</td>
             </tr>
         </table>
-        <a href="{% url 'user:user_update' user.pk%}" class="btn btn-primary">更新はこちらから</a>
     </div>
     <hr>
 </div>
