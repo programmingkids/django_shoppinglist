@@ -31,11 +31,6 @@
     
     <h5 class="mb-4 p-2 bg-success text-white">ショッピング商品一覧</h5>
     
-    <div class="mb-3">
-        <a href="{% url 'shoppinglist:shoppingitem_create' object.id %}" 
-           class="btn btn-success text-white">新規作成</a>
-    </div>    
-    
     <table class="table table-bordered table-hover">
         <thead class="thead-light">
             <tr>
@@ -45,7 +40,6 @@
                 <th>商品金額</th>
                 <th>個数</th>
                 <th>小計</th>
-                <th>更新</th>
             </tr>
         </thead>
         <tbody>
@@ -57,7 +51,6 @@
                 <td>{{shoppingitem.item.price}}</td>
                 <td>{{shoppingitem.quantity}}</td>
                 <td>{{shoppingitem.sub_total}}</td>
-                <td><a href="{% url 'shoppinglist:shoppingitem_update' shoppingitem.id %}">更新</a></td>
             </tr>
             {% endfor %}
         </tbody>
