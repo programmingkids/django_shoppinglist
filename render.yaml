@@ -1,6 +1,7 @@
 databases:
   - name: django_shoppinglist
     region: oregon
+    plan: free
     user: shoppinglist
 
 services:
