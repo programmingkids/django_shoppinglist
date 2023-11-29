@@ -5,46 +5,56 @@
 {% block content %}
 <div class="container mt-4">
     <div class="mx-auto py-4 text-center">
-        <h1 class="display-5 bg-primary text-white mb-4 p-2">{{title}}</h1>
+        <h1 class="display-6 bg-primary text-white mb-4 p-2">{{title}}</h1>
         <p class="lead">「買い物リストくん」は「ショッピングリスト」を作成するためのアプリです</p>
     </div>
-
-    <div class="container">
-        <div class="card-deck mb-3 text-center">
-            <div class="card mb-4 shadow-sm">
+    
+    <div class="row row-cols-1 row-cols-lg-3">
+        <div class="col">
+            <div class="card mb-4 text-center shadow-sm">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">カテゴリ</h4>
+                    <h4 class="my-0 fw-normal">カテゴリ</h4>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>カテゴリです</li>
                         <li>商品のカテゴリ</li>
                     </ul>
-                    <a href="" class="btn btn-lg btn-block btn-success">一覧</a>
+                    <div class="d-grid">
+                        <a href="" class="btn btn-success">一覧</a>
+                    </div>
                 </div>
             </div>
-            <div class="card mb-4 shadow-sm">
+        </div>
+        <div class="col">
+            <div class="card mb-4 text-center shadow-sm">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">商品</h4>
+                    <h4 class="my-0 fw-normal">商品</h4>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>商品です</li>
                         <li>ショッピングリストの商品</li>
                     </ul>
-                    <a href="" class="btn btn-lg btn-block btn-success">一覧</a>
+                    <div class="d-grid">
+                        <a href="" class="btn btn-success">一覧</a>
+                    </div>
                 </div>
             </div>
-            <div class="card mb-4 shadow-sm">
+        </div>
+        <div class="col">
+            <div class="card mb-4 text-center shadow-sm">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">シッピングリスト</h4>
+                    <h4 class="my-0 fw-normal">シッピングリスト</h4>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>ショッピングリストです</li>
                         <li>商品をまとめます</li>
                     </ul>
-                    <a href="" class="btn btn-lg btn-block btn-success">一覧</a>
+                    <div class="d-grid">
+                        <a href="" class="btn btn-success">一覧</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,17 +1,22 @@
 {% extends "account/base_manage.html" %}
-{% load allauth i18n %}
+{% load allauth %}
+{% load i18n %}
 {% block head_title %}
-    {% trans "Sign Out" %}
+    {% trans "Confirm Access" %}
 {% endblock head_title %}
 {% block content %}
     {% element h1 %}
-        {% trans "Sign Out" %}
+        {% trans "Confirm Access" %}
     {% endelement %}
-    <p>{% trans 'Are you sure you want to sign out?' %}</p>
-    {% url 'account_logout' as action_url %}
-    {% element form method="post" action=action_url no_visible_fields=True %}
+    <p>
+        {% blocktranslate %}To safeguard the security of your account, please enter your password:{% endblocktranslate %}
+    </p>
+    {% url 'account_reauthenticate' as action_url %}
+    {% element form form=form method="post" action=action_url %}
         {% slot body %}
             {% csrf_token %}
+            {% element fields form=form %}
+            {% endelement %}
             {% if redirect_field_value %}
                 <input type="hidden"
                        name="{{ redirect_field_name }}"
@@ -20,7 +25,7 @@
         {% endslot %}
         {% slot actions %}
             {% element button type="submit" %}
-                {% trans 'Sign Out' %}
+                {% trans "Confirm" %}
             {% endelement %}
         {% endslot %}
     {% endelement %}

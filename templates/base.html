@@ -1,18 +1,19 @@
-{% extends 'bootstrap4/bootstrap4.html' %}
+{% extends 'django_bootstrap5/bootstrap5.html' %}
 
 {% load static %}
-{% load bootstrap4 %}
+{% load django_bootstrap5 %}
 
 {# タイトルタグ #}
-{% block bootstrap4_title %}{% block title %}{% endblock %}{% endblock %}
+{% block bootstrap5_title %}{% block title %}{% endblock %}{% endblock %}
 
 {# ヘッダー内の追加要素 #}
-{% block bootstrap4_extra_head %}
+{% block bootstrap5_extra_head %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" />
 {% endblock %}
 
 {# メインコンテンツ #}
-{% block bootstrap4_content %}
+{% block bootstrap5_content %}
     {% if user.is_authenticated %}
         {% include 'navbar_auth.html' %}
     {% else %}
@@ -20,7 +21,7 @@
     {% endif %}
     <div class="container-fluid">
         <div class="container mt-4">
-            {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+            {% bootstrap_messages %}
         </div>
         {% block content %}(no content){% endblock %}
     </div>
