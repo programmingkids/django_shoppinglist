@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load bootstrap4 %}
+{% load django_bootstrap5 %}
 
 {% block title%}{{ title }}{% endblock %}
 
@@ -10,7 +10,7 @@
     
     {% bootstrap_pagination page_obj %}
     <table class="table table-bordered table-hover">
-        <thead class="thead-light">
+        <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>名前</th>
