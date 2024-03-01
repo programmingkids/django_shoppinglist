@@ -1,0 +1,4 @@
+[MASTER]
+ignore=templates,static
+load-plugins=pylint_django
+django-settings-module=django_shoppinglist.settings
